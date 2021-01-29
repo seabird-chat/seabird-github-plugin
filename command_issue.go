@@ -2,6 +2,7 @@ package github
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"time"
 
@@ -65,8 +66,11 @@ func (c *Client) issueCallback(source *pb.ChannelSource, cmd *pb.CommandEvent) {
 		return
 	}
 
+	body := fmt.Sprintf("Filed by %s in %s", source.User.DisplayName, source.ChannelId)
+
 	req := &github.IssueRequest{
 		Title: &arg,
+		Body:  &body,
 	}
 	if user != "" {
 		req.Assignee = &user
