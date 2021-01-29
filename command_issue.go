@@ -86,5 +86,5 @@ func (c *Client) issueCallback(source *pb.ChannelSource, cmd *pb.CommandEvent) {
 		return
 	}
 
-	_ = c.replyf(source, "Created issue #%d: %s", *issue.Number, *issue.URL)
+	_ = c.replyf(source, "Created issue #%d: %s", *issue.Number, *issue.HTMLURL)
 }
