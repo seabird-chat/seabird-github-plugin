@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/google/go-github/github"
+	"github.com/google/go-github/v67/github"
 	"golang.org/x/oauth2"
 
 	"github.com/seabird-chat/seabird-go"
