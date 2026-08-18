@@ -4,7 +4,6 @@ go 1.24.0
 
 require (
 	github.com/google/go-github/v67 v67.0.0
-	github.com/joho/godotenv v1.5.1
 	github.com/seabird-chat/seabird-go v0.6.0
 	golang.org/x/oauth2 v0.29.0
 )
