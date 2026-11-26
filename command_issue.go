@@ -66,7 +66,7 @@ func (c *Client) issueCallback(source *pb.ChannelSource, cmd *pb.CommandEvent) {
 		return
 	}
 
-	body := fmt.Sprintf("Filed by %s in %s", source.User.DisplayName, source.ChannelId)
+	body := fmt.Sprintf("Filed by %s in %s", source.User.DisplayName, c.channelName(source))
 
 	req := &github.IssueRequest{
 		Title: &arg,
@@ -91,4 +91,17 @@ func (c *Client) issueCallback(source *pb.ChannelSource, cmd *pb.CommandEvent) {
 	}
 
 	_ = c.replyf(source, "Created issue #%d: %s", *issue.Number, *issue.HTMLURL)
+}
+
+// channelName returns the display name of the channel source is in, falling
+// back to its ID if it can't be looked up.
+func (c *Client) channelName(source *pb.ChannelSource) string {
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	resp, err := c.Client.Inner.GetChannelInfo(ctx, &pb.ChannelInfoRequest{ChannelId: source.GetChannelId()})
+	if err != nil || resp.GetChannel().GetDisplayName() == "" {
+		return source.GetChannelId()
+	}
+	return resp.GetChannel().GetDisplayName()
 }
