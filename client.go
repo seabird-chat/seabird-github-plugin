@@ -54,9 +54,6 @@ func (c *Client) replyf(source *pb.ChannelSource, format string, args ...interfa
 	_, err := c.Client.Inner.SendMessage(context.TODO(), &pb.SendMessageRequest{
 		ChannelId: source.ChannelId,
 		Text:      msg,
-		Tags: map[string]string{
-			"url/skip": "1",
-		},
 	})
 	return err
 }
